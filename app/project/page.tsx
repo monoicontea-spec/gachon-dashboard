@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { StudentThumbnail } from "@/components/StudentThumbnail";
+import { ProjectThumbnail } from "@/components/ProjectThumbnail";
 import { STUDENTS } from "@/lib/students";
 
-export default function TerminalPage() {
-  const connectedCount = STUDENTS.filter((s) => s.connected).length;
+export default function ProjectPage() {
+  const connectedCount = STUDENTS.filter((s) => s.slideConnected).length;
 
   return (
     <div className="min-h-full bg-black text-white">
@@ -15,20 +15,20 @@ export default function TerminalPage() {
           ← 처음으로
         </Link>
         <p className="text-xs font-medium tracking-[0.3em] text-white/35 uppercase">
-          Student Sheets
+          Project Slides
         </p>
         <h1 className="mt-3 text-2xl font-light tracking-tight sm:text-3xl">
-          2026 AI/P학기 터미널
+          프로젝트
         </h1>
         <p className="mt-2 text-sm text-white/40">
-          총 {STUDENTS.length}명 · 연결 {connectedCount}명
+          총 {STUDENTS.length}명 · 슬라이드 연결 {connectedCount}명
         </p>
       </header>
 
       <main className="px-8 py-10 sm:px-12 lg:px-20">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
           {STUDENTS.map((student, index) => (
-            <StudentThumbnail
+            <ProjectThumbnail
               key={student.slug}
               student={student}
               index={index}

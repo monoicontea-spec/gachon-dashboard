@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { StudentSheet } from "@/lib/students";
+import type { Student } from "@/lib/students";
 
 interface StudentThumbnailProps {
-  student: StudentSheet;
+  student: Student;
   index: number;
 }
 
@@ -13,7 +13,7 @@ export function StudentThumbnail({ student, index }: StudentThumbnailProps) {
         <span className="text-xs font-medium tracking-widest text-white/30">
           {String(index + 1).padStart(2, "0")}
         </span>
-        {student.connected && (
+        {student.sheetConnected && (
           <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-400">
             연결됨
           </span>
@@ -40,7 +40,7 @@ export function StudentThumbnail({ student, index }: StudentThumbnailProps) {
         {student.name}
       </h3>
       <p className="mt-1 text-sm text-white/40">
-        {student.connected ? "재료구매 청구서" : "시트 연결 예정"}
+        {student.sheetConnected ? "재료구매 청구서" : "시트 연결 예정"}
       </p>
     </>
   );
@@ -48,7 +48,7 @@ export function StudentThumbnail({ student, index }: StudentThumbnailProps) {
   const className =
     "group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition duration-300 hover:border-white/20 hover:bg-white/[0.06]";
 
-  if (student.connected) {
+  if (student.sheetConnected) {
     return (
       <Link href={`/students/${student.slug}`} className={className}>
         {content}

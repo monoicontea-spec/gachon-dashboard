@@ -47,10 +47,10 @@ export async function DashboardView({
       <header className="border-b border-gachon-blue/20 bg-gachon-blue text-white shadow-md">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-6 sm:px-6 lg:px-8">
           <Link
-            href="/terminal"
+            href="/purchase"
             className="inline-flex w-fit items-center gap-1 text-sm text-blue-100/80 transition hover:text-white"
           >
-            ← 터미널로 돌아가기
+            ← 구매신청으로 돌아가기
           </Link>
           <p className="text-sm font-medium text-blue-100">가천대학교 산업디자인학과</p>
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">

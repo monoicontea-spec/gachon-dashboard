@@ -19,16 +19,25 @@ export default function Home() {
           </h1>
           <div className="mt-10 h-px w-16 bg-white/20" />
           <p className="mt-8 max-w-md text-left text-sm leading-relaxed text-white/45 sm:text-base">
-            35명의 재료구매 청구 시트를 한곳에서 확인하고 관리합니다.
+            재료구매 청구와 프로젝트 발표 자료를 한곳에서 확인하고 관리합니다.
           </p>
         </div>
 
-        <div className="mt-16">
+        <div className="mt-16 flex flex-wrap gap-4">
           <Link
-            href="/terminal"
+            href="/purchase"
             className="inline-flex items-center gap-3 border border-white/25 px-8 py-3.5 text-sm font-medium tracking-wide text-white transition duration-300 hover:border-white hover:bg-white hover:text-black"
           >
-            시작
+            구매신청
+            <span aria-hidden="true" className="text-base">
+              →
+            </span>
+          </Link>
+          <Link
+            href="/project"
+            className="inline-flex items-center gap-3 border border-white/15 px-8 py-3.5 text-sm font-medium tracking-wide text-white/80 transition duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
+          >
+            프로젝트
             <span aria-hidden="true" className="text-base">
               →
             </span>

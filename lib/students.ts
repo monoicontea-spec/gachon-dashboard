@@ -1,8 +1,10 @@
-export interface StudentSheet {
+export interface Student {
   slug: string;
   name: string;
-  connected: boolean;
+  sheetConnected: boolean;
   spreadsheetId?: string;
+  slideConnected: boolean;
+  presentationId?: string;
 }
 
 const PLACEHOLDER_NAMES = [
@@ -42,20 +44,25 @@ const PLACEHOLDER_NAMES = [
   "편민서",
 ];
 
-export const STUDENTS: StudentSheet[] = [
+const SAMPLE_PRESENTATION_ID = "17EneufgkJUPFi6KHC3uSS0lIcOo1Rey_";
+
+export const STUDENTS: Student[] = [
   {
     slug: "sample",
     name: "샘플",
-    connected: true,
+    sheetConnected: true,
     spreadsheetId: process.env.SPREADSHEET_ID,
+    slideConnected: true,
+    presentationId: SAMPLE_PRESENTATION_ID,
   },
   ...PLACEHOLDER_NAMES.map((name, index) => ({
     slug: `student-${String(index + 2).padStart(2, "0")}`,
     name,
-    connected: false,
+    sheetConnected: false,
+    slideConnected: false,
   })),
 ];
 
-export function getStudentBySlug(slug: string): StudentSheet | undefined {
+export function getStudentBySlug(slug: string): Student | undefined {
   return STUDENTS.find((student) => student.slug === slug);
 }

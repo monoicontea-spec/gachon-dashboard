@@ -10,7 +10,7 @@ export default async function StudentPage({ params }: StudentPageProps) {
   const { slug } = await params;
   const student = getStudentBySlug(slug);
 
-  if (!student || !student.connected) {
+  if (!student || !student.sheetConnected) {
     notFound();
   }
 
