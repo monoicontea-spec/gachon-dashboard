@@ -1,5 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { RegisterButton } from "@/components/RegisterButton";
 import type { Student } from "@/lib/students";
+import { getRegistration } from "@/lib/registrations";
 
 function formatCurrency(value: number): string {
   return new Intl.NumberFormat("ko-KR").format(value);
@@ -16,8 +21,55 @@ export function StudentThumbnail({
   index,
   totalAmount = null,
 }: StudentThumbnailProps) {
-  const hasTotal = totalAmount != null;
-  const isActive = hasTotal && totalAmount > 0;
+  const [registeredId, setRegisteredId] = useState<string | null>(null);
+  const [liveTotal, setLiveTotal] = useState<number | null>(totalAmount);
+
+  useEffect(() => {
+    setLiveTotal(totalAmount);
+  }, [totalAmount]);
+
+  useEffect(() => {
+    const sync = () => {
+      const entry = getRegistration(student.slug, "sheet");
+      setRegisteredId(entry?.resourceId ?? null);
+    };
+    sync();
+    window.addEventListener("gachon-registrations-updated", sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener("gachon-registrations-updated", sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, [student.slug]);
+
+  useEffect(() => {
+    const spreadsheetId = registeredId ?? student.spreadsheetId;
+    if (!spreadsheetId || student.sheetConnected) return;
+
+    let cancelled = false;
+
+    async function loadTotal() {
+      try {
+        const response = await fetch(
+          `/api/sheets?spreadsheetId=${encodeURIComponent(spreadsheetId!)}`
+        );
+        if (!response.ok) return;
+        const data = (await response.json()) as { totalAmount: number };
+        if (!cancelled) setLiveTotal(data.totalAmount);
+      } catch {
+        if (!cancelled) setLiveTotal(null);
+      }
+    }
+
+    void loadTotal();
+    return () => {
+      cancelled = true;
+    };
+  }, [registeredId, student.spreadsheetId, student.sheetConnected]);
+
+  const isConnected = student.sheetConnected || Boolean(registeredId);
+  const hasTotal = liveTotal != null;
+  const isActive = hasTotal && liveTotal > 0;
 
   const content = (
     <>
@@ -25,7 +77,7 @@ export function StudentThumbnail({
         <span className="text-xs font-medium tracking-widest text-white/30">
           {String(index + 1).padStart(2, "0")}
         </span>
-        {student.sheetConnected && (
+        {isConnected && (
           <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-400">
             연결됨
           </span>
@@ -46,12 +98,12 @@ export function StudentThumbnail({
             </p>
             <div>
               <p className="text-2xl font-bold tracking-tight tabular-nums text-white sm:text-3xl">
-                {formatCurrency(totalAmount)}
+                {formatCurrency(liveTotal)}
                 <span className="ml-0.5 text-base font-medium text-white/50 sm:text-lg">
                   원
                 </span>
               </p>
-              {totalAmount === 0 && (
+              {liveTotal === 0 && (
                 <p className="mt-1 text-xs text-white/30">청구 항목 없음</p>
               )}
             </div>
@@ -83,7 +135,7 @@ export function StudentThumbnail({
         {student.name}
       </h3>
       <p className="mt-1 text-sm text-white/40">
-        {student.sheetConnected ? "재료구매 청구서" : "시트 연결 예정"}
+        {isConnected ? "재료구매 청구서" : "시트 연결 예정"}
       </p>
     </>
   );
@@ -91,20 +143,24 @@ export function StudentThumbnail({
   const className =
     "group flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition duration-300 hover:border-white/20 hover:bg-white/[0.06]";
 
-  if (student.sheetConnected) {
-    return (
-      <Link href={`/students/${student.slug}`} className={className}>
-        {content}
-      </Link>
-    );
-  }
-
   return (
-    <div
-      className={`${className} cursor-default opacity-50`}
-      aria-disabled="true"
-    >
-      {content}
+    <div className={className}>
+      {student.sheetConnected ? (
+        <Link href={`/students/${student.slug}`} className="block">
+          {content}
+        </Link>
+      ) : (
+        <div className={isConnected ? "" : "opacity-70"}>{content}</div>
+      )}
+      <RegisterButton
+        slug={student.slug}
+        studentName={student.name}
+        type="sheet"
+        onRegistered={() => {
+          const entry = getRegistration(student.slug, "sheet");
+          setRegisteredId(entry?.resourceId ?? null);
+        }}
+      />
     </div>
   );
 }

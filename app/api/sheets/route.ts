@@ -1,11 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { fetchSheetData } from "@/lib/sheets";
 
 export const revalidate = 60;
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const data = await fetchSheetData();
+    const spreadsheetId =
+      request.nextUrl.searchParams.get("spreadsheetId") ?? undefined;
+    const data = await fetchSheetData(spreadsheetId);
     return NextResponse.json(data);
   } catch (error) {
     const message =

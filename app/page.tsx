@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { NewTabLink } from "@/components/NewTabLink";
 
 export default function Home() {
@@ -10,13 +11,34 @@ export default function Home() {
           <p className="mb-6 text-xs font-medium tracking-[0.35em] text-white/40 uppercase">
             Gachon University · Industrial Design
           </p>
-          <h1 className="text-left text-3xl leading-[1.2] font-light tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.5rem]">
-            <span className="block md:whitespace-nowrap">2026 가천대학교</span>
-            <span className="block md:whitespace-nowrap">산업디자인과 AI/P학기</span>
-            <span className="block md:whitespace-nowrap font-normal text-white/90">
-              터미널
-            </span>
-          </h1>
+
+          <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-12">
+            <h1 className="text-left text-3xl leading-[1.2] font-light tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.5rem]">
+              <span className="block md:whitespace-nowrap">2026 가천대학교</span>
+              <span className="block md:whitespace-nowrap">
+                산업디자인과{" "}
+                <span className="text-sky-300">AI</span>
+                /
+                <span className="text-orange-400">P</span>
+                학기
+              </span>
+              <span className="block md:whitespace-nowrap font-normal text-white/90">
+                터미널
+              </span>
+            </h1>
+
+            <div className="shrink-0 self-start md:self-auto">
+              <Image
+                src="/dept-logo.png"
+                alt="가천대학교 산업디자인과 심볼"
+                width={567}
+                height={567}
+                priority
+                className="h-[7.2rem] w-[7.2rem] object-contain sm:h-[8.4rem] sm:w-[8.4rem] md:h-[10.8rem] md:w-[10.8rem] lg:h-[12.6rem] lg:w-[12.6rem]"
+              />
+            </div>
+          </div>
+
           <div className="mt-10 h-px w-16 bg-white/20" />
           <p className="mt-8 max-w-2xl text-left text-sm leading-relaxed text-white/45 sm:text-base">
             재료구매 청구와 프로젝트 발표 자료를 한곳에서 확인하고 관리합니다.

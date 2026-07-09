@@ -3,8 +3,6 @@ import { ProjectThumbnail } from "@/components/ProjectThumbnail";
 import { STUDENTS } from "@/lib/students";
 
 export default function ProjectPage() {
-  const connectedCount = STUDENTS.filter((s) => s.slideConnected).length;
-
   return (
     <div className="min-h-full bg-black text-white">
       <header className="border-b border-white/8 px-8 py-8 sm:px-12 lg:px-20">
@@ -21,7 +19,7 @@ export default function ProjectPage() {
           프로젝트
         </h1>
         <p className="mt-2 text-sm text-white/40">
-          총 {STUDENTS.length}명 · 슬라이드 연결 {connectedCount}명
+          총 {STUDENTS.length}명 · 학생별 구글 슬라이드 공유 링크를 등록합니다.
         </p>
       </header>
 

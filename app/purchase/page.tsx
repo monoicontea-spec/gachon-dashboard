@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { StudentThumbnail } from "@/components/StudentThumbnail";
+import { PurchaseGrid } from "@/components/PurchaseGrid";
 import { fetchSheetData } from "@/lib/sheets";
 import { STUDENTS } from "@/lib/students";
 
@@ -23,7 +23,6 @@ async function fetchStudentTotals(): Promise<Record<string, number | null>> {
 }
 
 export default async function PurchasePage() {
-  const connectedCount = STUDENTS.filter((s) => s.sheetConnected).length;
   const totals = await fetchStudentTotals();
 
   return (
@@ -42,21 +41,12 @@ export default async function PurchasePage() {
           구매신청
         </h1>
         <p className="mt-2 text-sm text-white/40">
-          총 {STUDENTS.length}명 · 시트 연결 {connectedCount}명
+          학생별 구글 시트 공유 링크를 등록하고 청구 현황을 확인합니다.
         </p>
       </header>
 
       <main className="px-8 py-10 sm:px-12 lg:px-20">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-          {STUDENTS.map((student, index) => (
-            <StudentThumbnail
-              key={student.slug}
-              student={student}
-              index={index}
-              totalAmount={totals[student.slug] ?? null}
-            />
-          ))}
-        </div>
+        <PurchaseGrid students={STUDENTS} initialTotals={totals} />
       </main>
     </div>
   );
