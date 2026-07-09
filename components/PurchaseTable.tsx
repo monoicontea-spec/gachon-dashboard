@@ -16,17 +16,17 @@ interface PurchaseTableProps {
 export function PurchaseTable({ rows }: PurchaseTableProps) {
   if (rows.length === 0) {
     return (
-      <div className="rounded-xl border border-slate-200 bg-white px-6 py-16 text-center text-slate-500">
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] px-6 py-16 text-center text-white/45">
         표시할 청구 데이터가 없습니다.
       </div>
     );
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    <div className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-slate-200 text-sm">
-          <thead className="bg-gachon-blue text-left text-white">
+        <table className="min-w-full divide-y divide-white/10 text-sm">
+          <thead className="bg-white/[0.06] text-left text-white">
             <tr>
               <th className="px-4 py-3.5 font-semibold whitespace-nowrap">순번</th>
               <th className="px-4 py-3.5 font-semibold whitespace-nowrap">재료명</th>
@@ -39,46 +39,46 @@ export function PurchaseTable({ rows }: PurchaseTableProps) {
               <th className="px-4 py-3.5 font-semibold whitespace-nowrap">물품수령확인</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 bg-white">
+          <tbody className="divide-y divide-white/8">
             {rows.map((row, index) => (
               <tr
                 key={`${row.순번}-${index}`}
-                className="transition-colors hover:bg-slate-50/80"
+                className="transition-colors hover:bg-white/[0.04]"
               >
-                <td className="px-4 py-3.5 text-slate-600 whitespace-nowrap">{row.순번 || "—"}</td>
-                <td className="px-4 py-3.5 font-medium text-slate-900">{row.재료명 || "—"}</td>
+                <td className="px-4 py-3.5 text-white/60 whitespace-nowrap">{row.순번 || "—"}</td>
+                <td className="px-4 py-3.5 font-medium text-white">{row.재료명 || "—"}</td>
                 <td className="px-4 py-3.5 max-w-[200px]">
                   {isUrl(row.구매사이트) ? (
                     <a
                       href={row.구매사이트.trim()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gachon-accent underline-offset-2 hover:underline break-all"
+                      className="text-sky-400 underline-offset-2 hover:underline break-all"
                     >
                       {row.구매사이트}
                     </a>
                   ) : (
-                    <span className="text-slate-600">{row.구매사이트 || "—"}</span>
+                    <span className="text-white/60">{row.구매사이트 || "—"}</span>
                   )}
                 </td>
-                <td className="px-4 py-3.5 text-slate-600">{row.옵션 || "—"}</td>
-                <td className="px-4 py-3.5 text-center text-slate-600 whitespace-nowrap">{row.수량 || "—"}</td>
-                <td className="px-4 py-3.5 text-right text-slate-600 whitespace-nowrap">
+                <td className="px-4 py-3.5 text-white/60">{row.옵션 || "—"}</td>
+                <td className="px-4 py-3.5 text-center text-white/60 whitespace-nowrap">{row.수량 || "—"}</td>
+                <td className="px-4 py-3.5 text-right text-white/60 whitespace-nowrap">
                   {row.단가 ? `${formatCurrency(Number(String(row.단가).replace(/,/g, "")) || 0)}원` : "—"}
                 </td>
-                <td className="px-4 py-3.5 text-right font-semibold text-slate-900 whitespace-nowrap">
+                <td className="px-4 py-3.5 text-right font-semibold text-white whitespace-nowrap">
                   {row.총액 > 0 ? `${formatCurrency(row.총액)}원` : "—"}
                 </td>
                 <td className="px-4 py-3.5 text-center whitespace-nowrap">
                   <StatusBadge status={row.상태} />
                 </td>
-                <td className="px-4 py-3.5 text-slate-600">
+                <td className="px-4 py-3.5 text-white/60">
                   {isUrl(row.물품수령확인) ? (
                     <a
                       href={row.물품수령확인.trim()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gachon-accent underline-offset-2 hover:underline break-all"
+                      className="text-sky-400 underline-offset-2 hover:underline break-all"
                     >
                       사진 보기
                     </a>

@@ -43,20 +43,20 @@ export async function DashboardView({
     ).length ?? 0;
 
   return (
-    <div className="min-h-full bg-slate-50">
-      <header className="border-b border-gachon-blue/20 bg-gachon-blue text-white shadow-md">
+    <div className="min-h-full bg-black text-white">
+      <header className="border-b border-white/10 bg-black">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-6 sm:px-6 lg:px-8">
           <Link
             href="/purchase"
-            className="inline-flex w-fit items-center gap-1 text-sm text-blue-100/80 transition hover:text-white"
+            className="inline-flex w-fit items-center gap-1 text-sm text-white/50 transition hover:text-white"
           >
             ← 구매신청으로 돌아가기
           </Link>
-          <p className="text-sm font-medium text-blue-100">가천대학교 산업디자인학과</p>
+          <p className="text-sm font-medium text-white/50">가천대학교 산업디자인학과</p>
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
             {studentName} · 재료구매 청구 대시보드
           </h1>
-          <p className="max-w-2xl text-sm text-blue-100/90">
+          <p className="max-w-2xl text-sm text-white/45">
             구글 시트와 연동된 재료구매 청구 현황을 한눈에 확인할 수 있습니다.
           </p>
         </div>
@@ -64,39 +64,39 @@ export async function DashboardView({
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {errorMessage ? (
-          <div className="rounded-xl border border-red-200 bg-red-50 px-6 py-5 text-red-700">
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-6 py-5 text-red-300">
             <p className="font-semibold">데이터를 불러올 수 없습니다</p>
             <p className="mt-1 text-sm">{errorMessage}</p>
           </div>
         ) : (
           <>
             <section className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <article className="rounded-xl border border-gachon-blue/10 bg-white p-6 shadow-sm sm:col-span-2 lg:col-span-2">
-                <p className="text-sm font-medium text-slate-500">현재 청구 총액</p>
-                <p className="mt-2 text-4xl font-bold tracking-tight text-gachon-blue">
+              <article className="rounded-xl border border-white/10 bg-white/[0.03] p-6 sm:col-span-2 lg:col-span-2">
+                <p className="text-sm font-medium text-white/45">현재 청구 총액</p>
+                <p className="mt-2 text-4xl font-bold tracking-tight text-white">
                   {formatCurrency(data!.totalAmount)}
                   <span className="ml-1 text-2xl font-semibold">원</span>
                 </p>
-                <p className="mt-3 text-xs text-slate-400">
+                <p className="mt-3 text-xs text-white/30">
                   마지막 갱신: {formatDateTime(data!.lastUpdated)}
                 </p>
               </article>
 
-              <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-                <p className="text-sm font-medium text-slate-500">청구 항목 수</p>
-                <p className="mt-2 text-3xl font-bold text-slate-900">
+              <article className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+                <p className="text-sm font-medium text-white/45">청구 항목 수</p>
+                <p className="mt-2 text-3xl font-bold text-white">
                   {data!.rows.length}
-                  <span className="ml-1 text-lg font-medium text-slate-500">건</span>
+                  <span className="ml-1 text-lg font-medium text-white/45">건</span>
                 </p>
               </article>
 
-              <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-                <p className="text-sm font-medium text-slate-500">처리 현황</p>
+              <article className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
+                <p className="text-sm font-medium text-white/45">처리 현황</p>
                 <div className="mt-3 flex flex-wrap gap-3 text-sm">
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700">
+                  <span className="rounded-full bg-emerald-500/15 px-3 py-1 font-medium text-emerald-400">
                     완료 {completedCount}
                   </span>
-                  <span className="rounded-full bg-orange-50 px-3 py-1 font-medium text-orange-700">
+                  <span className="rounded-full bg-orange-500/15 px-3 py-1 font-medium text-orange-400">
                     진행 {inProgressCount}
                   </span>
                 </div>
@@ -105,8 +105,8 @@ export async function DashboardView({
 
             <section>
               <div className="mb-4">
-                <h2 className="text-lg font-semibold text-slate-900">청구 내역</h2>
-                <p className="mt-1 text-sm text-slate-500">
+                <h2 className="text-lg font-semibold text-white">청구 내역</h2>
+                <p className="mt-1 text-sm text-white/45">
                   구글 시트에서 실시간으로 불러온 재료구매 청구 목록입니다.
                 </p>
               </div>
