@@ -1,12 +1,24 @@
 import Link from "next/link";
 import type { Student } from "@/lib/students";
 
+function formatCurrency(value: number): string {
+  return new Intl.NumberFormat("ko-KR").format(value);
+}
+
 interface StudentThumbnailProps {
   student: Student;
   index: number;
+  totalAmount?: number | null;
 }
 
-export function StudentThumbnail({ student, index }: StudentThumbnailProps) {
+export function StudentThumbnail({
+  student,
+  index,
+  totalAmount = null,
+}: StudentThumbnailProps) {
+  const hasTotal = totalAmount != null;
+  const isActive = hasTotal && totalAmount > 0;
+
   const content = (
     <>
       <div className="mb-4 flex items-start justify-between gap-2">
@@ -20,20 +32,51 @@ export function StudentThumbnail({ student, index }: StudentThumbnailProps) {
         )}
       </div>
 
-      <div className="mb-6 aspect-[4/3] rounded-lg border border-white/8 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-4">
-        <div className="flex h-full flex-col justify-between">
-          <div className="space-y-2">
-            <div className="h-1.5 w-12 rounded-full bg-white/20" />
-            <div className="h-1.5 w-full rounded-full bg-white/10" />
-            <div className="h-1.5 w-4/5 rounded-full bg-white/10" />
-            <div className="h-1.5 w-3/5 rounded-full bg-white/10" />
+      <div
+        className={`relative mb-6 aspect-[4/3] overflow-hidden rounded-lg border p-4 ${
+          isActive
+            ? "border-emerald-400/20 bg-gradient-to-br from-emerald-500/15 via-white/[0.04] to-transparent"
+            : "border-white/8 bg-gradient-to-br from-white/[0.06] to-white/[0.02]"
+        }`}
+      >
+        {hasTotal ? (
+          <div className="flex h-full flex-col justify-between">
+            <p className="text-[10px] font-semibold tracking-[0.25em] text-white/35 uppercase">
+              신청 총액
+            </p>
+            <div>
+              <p className="text-2xl font-bold tracking-tight tabular-nums text-white sm:text-3xl">
+                {formatCurrency(totalAmount)}
+                <span className="ml-0.5 text-base font-medium text-white/50 sm:text-lg">
+                  원
+                </span>
+              </p>
+              {totalAmount === 0 && (
+                <p className="mt-1 text-xs text-white/30">청구 항목 없음</p>
+              )}
+            </div>
+            <div className="flex gap-1">
+              <span
+                className={`h-1 flex-1 rounded-full ${
+                  isActive ? "bg-emerald-400/60" : "bg-white/10"
+                }`}
+              />
+              <span className="h-1 w-8 rounded-full bg-white/10" />
+            </div>
           </div>
-          <div className="grid grid-cols-3 gap-1.5">
-            <div className="h-6 rounded bg-white/5" />
-            <div className="h-6 rounded bg-white/5" />
-            <div className="h-6 rounded bg-white/5" />
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
+            <p className="text-[10px] font-semibold tracking-[0.25em] text-white/25 uppercase">
+              신청 총액
+            </p>
+            <p className="text-3xl font-light text-white/20">—</p>
+            <p className="text-xs text-white/25">시트 연결 예정</p>
           </div>
-        </div>
+        )}
+
+        {isActive && (
+          <div className="pointer-events-none absolute -top-6 -right-6 h-20 w-20 rounded-full bg-emerald-400/10 blur-2xl" />
+        )}
       </div>
 
       <h3 className="text-lg font-semibold tracking-tight text-white">
