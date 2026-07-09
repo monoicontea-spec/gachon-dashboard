@@ -14,6 +14,7 @@ interface RegisterButtonProps {
   studentName: string;
   type: RegistrationType;
   onRegistered?: () => void;
+  compact?: boolean;
 }
 
 export function RegisterButton({
@@ -21,6 +22,7 @@ export function RegisterButton({
   studentName,
   type,
   onRegistered,
+  compact = false,
 }: RegisterButtonProps) {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState("");
@@ -89,7 +91,7 @@ export function RegisterButton({
           event.stopPropagation();
           setOpen(true);
         }}
-        className={`mt-4 w-full rounded-lg border px-3 py-2 text-xs font-medium tracking-wide transition ${
+        className={`${compact ? "w-full" : "mt-4 w-full"} rounded-lg border px-3 py-2 text-xs font-medium tracking-wide transition ${
           registered
             ? "border-emerald-400/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/15"
             : "border-white/15 bg-white/[0.04] text-white/70 hover:border-white/30 hover:bg-white/[0.08] hover:text-white"
@@ -114,7 +116,8 @@ export function RegisterButton({
               {studentName} · {label} 등록
             </h2>
             <p className="mt-2 text-sm text-white/45">
-              학생에게 받은 {label} 공유 링크를 붙여넣으면 이 카드에 연결됩니다.
+              학생에게 받은 {label} 공유 링크
+              (링크가 있는 모든 사용자 · 편집자)를 붙여넣으면 이 카드에 연결됩니다.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">

@@ -13,7 +13,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-12">
-            <h1 className="text-left text-3xl leading-[1.2] font-light tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.5rem]">
+            <h1 className="text-left text-3xl leading-[1.2] font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.5rem]">
               <span className="block md:whitespace-nowrap">2026 가천대학교</span>
               <span className="block md:whitespace-nowrap">
                 산업디자인과{" "}
@@ -22,7 +22,7 @@ export default function Home() {
                 <span className="text-orange-400">P</span>
                 학기
               </span>
-              <span className="block md:whitespace-nowrap font-normal text-white/90">
+              <span className="block md:whitespace-nowrap text-white/90">
                 터미널
               </span>
             </h1>

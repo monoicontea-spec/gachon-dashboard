@@ -145,22 +145,37 @@ export function StudentThumbnail({
 
   return (
     <div className={className}>
-      {student.sheetConnected ? (
+      {isConnected ? (
         <Link href={`/students/${student.slug}`} className="block">
           {content}
         </Link>
       ) : (
-        <div className={isConnected ? "" : "opacity-70"}>{content}</div>
+        <div className="opacity-70">{content}</div>
       )}
-      <RegisterButton
-        slug={student.slug}
-        studentName={student.name}
-        type="sheet"
-        onRegistered={() => {
-          const entry = getRegistration(student.slug, "sheet");
-          setRegisteredId(entry?.resourceId ?? null);
-        }}
-      />
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        {isConnected ? (
+          <Link
+            href={`/students/${student.slug}?mode=edit`}
+            className="rounded-lg border border-orange-400/40 bg-orange-400/10 px-3 py-2 text-center text-xs font-medium tracking-wide text-orange-300 transition hover:border-orange-400 hover:bg-orange-400/15"
+          >
+            수정
+          </Link>
+        ) : (
+          <span className="rounded-lg border border-white/10 px-3 py-2 text-center text-xs text-white/25">
+            수정
+          </span>
+        )}
+        <RegisterButton
+          slug={student.slug}
+          studentName={student.name}
+          type="sheet"
+          compact
+          onRegistered={() => {
+            const entry = getRegistration(student.slug, "sheet");
+            setRegisteredId(entry?.resourceId ?? null);
+          }}
+        />
+      </div>
     </div>
   );
 }

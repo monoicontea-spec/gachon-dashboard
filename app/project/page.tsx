@@ -19,7 +19,7 @@ export default function ProjectPage() {
           프로젝트
         </h1>
         <p className="mt-2 text-sm text-white/40">
-          총 {STUDENTS.length}명 · 학생별 구글 슬라이드 공유 링크를 등록합니다.
+          총 {STUDENTS.length}명 · 학생별 편집 가능 구글 슬라이드 링크를 등록합니다.
         </p>
       </header>
 
