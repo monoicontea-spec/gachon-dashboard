@@ -1,111 +1,43 @@
-import { PurchaseTable } from "@/components/PurchaseTable";
-import { fetchSheetData } from "@/lib/sheets";
+import Link from "next/link";
 
-function formatCurrency(value: number): string {
-  return new Intl.NumberFormat("ko-KR").format(value);
-}
-
-function formatDateTime(iso: string): string {
-  return new Intl.DateTimeFormat("ko-KR", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(new Date(iso));
-}
-
-export default async function Home() {
-  let data;
-  let errorMessage: string | null = null;
-
-  try {
-    data = await fetchSheetData();
-  } catch (error) {
-    errorMessage =
-      error instanceof Error
-        ? error.message
-        : "데이터를 불러오는 중 오류가 발생했습니다.";
-  }
-
-  const completedCount =
-    data?.rows.filter((row) => row.상태.trim() === "완료").length ?? 0;
-  const inProgressCount =
-    data?.rows.filter((row) =>
-      ["접수", "진행중"].includes(row.상태.trim())
-    ).length ?? 0;
-
+export default function Home() {
   return (
-    <div className="min-h-full bg-slate-50">
-      <header className="border-b border-gachon-blue/20 bg-gachon-blue text-white shadow-md">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 sm:px-6 lg:px-8">
-          <p className="text-sm font-medium text-blue-100">가천대학교 산업디자인학과</p>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            P학기 재료구매 청구 대시보드
+    <div className="relative flex min-h-full flex-col bg-black text-white">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(255,255,255,0.06)_0%,_transparent_50%)]" />
+
+      <main className="relative flex flex-1 flex-col justify-between px-8 py-12 sm:px-12 sm:py-16 lg:px-20 lg:py-24">
+        <div className="max-w-4xl">
+          <p className="mb-6 text-xs font-medium tracking-[0.35em] text-white/40 uppercase">
+            Gachon University · Industrial Design
+          </p>
+          <h1 className="text-left text-3xl leading-[1.15] font-light tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+            2026 가천대학교
+            <br />
+            산업디자인과 AI/P학기
+            <br />
+            <span className="font-normal text-white/90">터미널</span>
           </h1>
-          <p className="max-w-2xl text-sm text-blue-100/90">
-            구글 시트와 연동된 재료구매 청구 현황을 한눈에 확인할 수 있습니다.
+          <div className="mt-10 h-px w-16 bg-white/20" />
+          <p className="mt-8 max-w-md text-left text-sm leading-relaxed text-white/45 sm:text-base">
+            35명의 재료구매 청구 시트를 한곳에서 확인하고 관리합니다.
           </p>
         </div>
-      </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        {errorMessage ? (
-          <div className="rounded-xl border border-red-200 bg-red-50 px-6 py-5 text-red-700">
-            <p className="font-semibold">데이터를 불러올 수 없습니다</p>
-            <p className="mt-1 text-sm">{errorMessage}</p>
-          </div>
-        ) : (
-          <>
-            <section className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <article className="rounded-xl border border-gachon-blue/10 bg-white p-6 shadow-sm sm:col-span-2 lg:col-span-2">
-                <p className="text-sm font-medium text-slate-500">현재 청구 총액</p>
-                <p className="mt-2 text-4xl font-bold tracking-tight text-gachon-blue">
-                  {formatCurrency(data!.totalAmount)}
-                  <span className="ml-1 text-2xl font-semibold">원</span>
-                </p>
-                <p className="mt-3 text-xs text-slate-400">
-                  마지막 갱신: {formatDateTime(data!.lastUpdated)}
-                </p>
-              </article>
-
-              <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-                <p className="text-sm font-medium text-slate-500">청구 항목 수</p>
-                <p className="mt-2 text-3xl font-bold text-slate-900">
-                  {data!.rows.length}
-                  <span className="ml-1 text-lg font-medium text-slate-500">건</span>
-                </p>
-              </article>
-
-              <article className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-                <p className="text-sm font-medium text-slate-500">처리 현황</p>
-                <div className="mt-3 flex flex-wrap gap-3 text-sm">
-                  <span className="rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700">
-                    완료 {completedCount}
-                  </span>
-                  <span className="rounded-full bg-orange-50 px-3 py-1 font-medium text-orange-700">
-                    진행 {inProgressCount}
-                  </span>
-                </div>
-              </article>
-            </section>
-
-            <section>
-              <div className="mb-4 flex items-end justify-between gap-4">
-                <div>
-                  <h2 className="text-lg font-semibold text-slate-900">청구 내역</h2>
-                  <p className="mt-1 text-sm text-slate-500">
-                    구글 시트에서 실시간으로 불러온 재료구매 청구 목록입니다.
-                  </p>
-                </div>
-              </div>
-              <PurchaseTable rows={data!.rows} />
-            </section>
-          </>
-        )}
+        <div className="mt-16">
+          <Link
+            href="/terminal"
+            className="inline-flex items-center gap-3 border border-white/25 px-8 py-3.5 text-sm font-medium tracking-wide text-white transition duration-300 hover:border-white hover:bg-white hover:text-black"
+          >
+            시작
+            <span aria-hidden="true" className="text-base">
+              →
+            </span>
+          </Link>
+        </div>
       </main>
 
-      <footer className="mt-12 border-t border-slate-200 bg-white py-6">
-        <p className="text-center text-xs text-slate-400">
-          Gachon University · Industrial Design · Material Purchase Dashboard
-        </p>
+      <footer className="relative border-t border-white/8 px-8 py-5 sm:px-12 lg:px-20">
+        <p className="text-left text-xs text-white/25">2026 · Terminal v1.0</p>
       </footer>
     </div>
   );

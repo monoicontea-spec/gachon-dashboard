@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "가천대 산디과 재료구매 청구 대시보드",
-  description: "구글 시트 연동 재료구매 청구 현황 대시보드",
+  title: "2026 가천대 산업디자인과 AI/P학기 터미널",
+  description: "가천대학교 산업디자인과 재료구매 청구 시트 터미널",
 };
 
 export default function RootLayout({

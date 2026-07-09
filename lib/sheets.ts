@@ -62,9 +62,9 @@ function isDataRow(row: PurchaseRow): boolean {
   );
 }
 
-export async function fetchSheetData(): Promise<SheetData> {
-  const spreadsheetId = process.env.SPREADSHEET_ID;
-  if (!spreadsheetId) {
+export async function fetchSheetData(spreadsheetId?: string): Promise<SheetData> {
+  const id = spreadsheetId ?? process.env.SPREADSHEET_ID;
+  if (!id) {
     throw new Error("SPREADSHEET_ID 환경 변수가 설정되지 않았습니다.");
   }
 
@@ -77,7 +77,7 @@ export async function fetchSheetData(): Promise<SheetData> {
     range,
   });
 
-  const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?${params.toString()}`;
+  const url = `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?${params.toString()}`;
 
   const response = await fetch(url, {
     next: { revalidate: 60 },
